@@ -22,13 +22,11 @@ Install the scr-client as follows:
 1.	Download the scr-patch from [here](https://sourceforge.net/projects/cig/files/SCR%20Championship/Server%20Linux/2.1/scr-linux-patch.tgz/download).
 2.	Unpack the package scr-linux-patch.tgz in your base TORCS directory.
 3.	This will create a new directory called scr-patch.     
-    ```
-    cd scr-patch
-    ```
+    `cd scr-patch`
 4.	`sh do_patch.sh` (`do_unpatch.sh` to revert the modifications)     
 5.	Move to the parent TORCS directory    
     `cd ../`
-6.	Run the following commands
+6.	Run the following commands:
     ```
     ./configure    
     make -j4    
@@ -55,12 +53,12 @@ Install the scr-client as follows:
 
 ## Usage:
 
-1. 	Start a 'Quick Race' in TORCS in one terminal console (with the n agents being `scr_*`)
-..*	`$ torcs`
-2. 	From inside the multi-agent-torcs directory in one console:
-..*	`$ python playGame.py 3001`
-3. 	From another console:
-..*	`$ python playGame.py 3002`
+1. 	Start a 'Quick Race' in TORCS in one terminal console (with the n agents being `scr_*`)    
+    `torcs`
+2. 	From inside the multi-agent-torcs directory in one console:    
+    `python playGame.py 3001`
+3. 	From another console:    
+    `python playGame.py 3002`    
 	And so on...
 
 In the game loop in `playGame.py`, the action at every timestep `a_t` can be supplied by any algorithm.
