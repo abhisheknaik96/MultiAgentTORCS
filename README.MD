@@ -19,29 +19,35 @@ It is assumed that you have TORCS installed from the source code on a machine wi
 
 Install the scr-client as follows:
 
-1.	Download the scr-patch from (here)[https://sourceforge.net/projects/cig/files/SCR%20Championship/Server%20Linux/2.1/scr-linux-patch.tgz/download].
+1.	Download the scr-patch from [here](https://sourceforge.net/projects/cig/files/SCR%20Championship/Server%20Linux/2.1/scr-linux-patch.tgz/download).
 2.	Unpack the package scr-linux-patch.tgz in your base TORCS directory.
-3.	This will create a new directory called scr-patch. 
-..*	`cd scr-patch`
+3.	This will create a new directory called scr-patch.     
+    ```
+    cd scr-patch
+    ```
 4.	`sh do_patch.sh` (`do_unpatch.sh` to revert the modifications)     
-5.	Move to the parent TORCS directory
-..*	`cd ../`
+5.	Move to the parent TORCS directory    
+    `cd ../`
 6.	Run the following commands
-..*	`./configure`
-..*	`make -j4`
-..*	`sudo make install -j4`
-..*	`sudo make datainstall -j4`
+    ```
+    ./configure    
+    make -j4    
+    sudo make install -j4    
+    sudo make datainstall -j4    
+    ```
 
 10 scr_server car should be available in the race configurations now.
 
-7.	Download the C++ client from (here)[https://sourceforge.net/projects/cig/files/SCR%20Championship/Client%20C%2B%2B/2.0/].
+7.	Download the C++ client from [here](https://sourceforge.net/projects/cig/files/SCR%20Championship/Client%20C%2B%2B/2.0/).
 8.	Unpack the package `scr-client-cpp.tgz` in your base TORCS directory.
-9.	This will create a new directory called `scr-client-cpp`. 
-..*	`cd scr-client-cpp`
+9.	This will create a new directory called `scr-client-cpp`.     
+    `cd scr-client-cpp`
 10.	`make -j4`
 11.	At this point, multiple clients can join an instance of the TORCS game by:
-..*	`./client`
-..*	`./client port:3002`
+    ```
+    ./client    
+    ./client port:3002
+    ```
 	Typical values are between 3001 and 3010 (3001 is the default)
 
 
