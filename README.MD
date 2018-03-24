@@ -54,7 +54,8 @@ Install the scr-client as follows:
 ## Usage:
 
 1. 	Start a 'Quick Race' in TORCS in one terminal console (with the n agents being `scr_*`)    
-    `torcs`
+    `torcs`    
+    Close the TORCS window.
 2. 	From inside the multi-agent-torcs directory in one console:    
     `python playGame.py 3001`
 3. 	From another console:    
@@ -65,6 +66,23 @@ In the game loop in `playGame.py`, the action at every timestep `a_t` can be sup
 
 ---
 
+### For single-agent learning:
+
+1.   Start a 'Quick Race' in TORCS in one terminal console. Choose only one `scr` car and as many as traffic cars as you want (preferably `chenyi*`<sup>1</sup>, since they're programmed to follow individual lanes at speeds low enough for the agent to learn to overtake)
+2.  From inside the multi-agent-torcs directory in one console:    
+    `python playGame_DDPG.py 3001`    
+    or any other port.
+
+Sample results for a DDPG agent learned to drive in traffic are [available here](https://www.youtube.com/playlist?list=PL64VfM4ZEjDvlALjskRm0g4Tfay14_I2r).
+
+---
+
+Do check out [the wiki](https://github.com/abhisheknaik96/MultiAgentTORCS/wiki) for this project for in-depth information about TORCS and getting Deep (Reinforcement) Learning to work on it.
+
+--- 
+
+<sub>1 The `chenyi*` cars can be installed from [Princeton's DeepDrive project](http://deepdriving.cs.princeton.edu/), which also adds a few maps from training and testing the agents. The default cars in TORCS are all programmed heuristic racing agents, which do not serve as good stand-ins for 'traffic'. Hence, using chenyi's code is highly recommended. </sub>
+
 ## Acknowledgements
 
-The multi-agent learning simulator was developed by [Abhishek Naik](http://abhisheknaik96.github.io/), under the guidance of Anirban Santara, Balaraman Ravindran, and Bharat Kaul.
+The multi-agent learning simulator was developed by [Abhishek Naik](http://abhisheknaik96.github.io), under the guidance of Anirban Santara, Balaraman Ravindran, and Bharat Kaul.
