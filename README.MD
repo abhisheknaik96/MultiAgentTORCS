@@ -83,6 +83,6 @@ Do check out [the wiki](https://github.com/abhisheknaik96/MultiAgentTORCS/wiki) 
 
 <sub>1 The `chenyi*` cars can be installed from [Princeton's DeepDrive project](http://deepdriving.cs.princeton.edu/), which also adds a few maps from training and testing the agents. The default cars in TORCS are all programmed heuristic racing agents, which do not serve as good stand-ins for 'traffic'. Hence, using chenyi's code is highly recommended. </sub>
 
-## Acknowledgements
+## Credits
 
-The multi-agent learning simulator was developed by [Abhishek Naik](http://abhisheknaik96.github.io), under the guidance of Anirban Santara, Balaraman Ravindran, and Bharat Kaul.
+The multi-agent learning simulator was developed by [Abhishek Naik](http://abhisheknaik96.github.io), extending `ugo-nama-kun`'s [`gym-torcs`](ugo-nama-kun), under the guidance of Anirban Santara, Balaraman Ravindran, and Bharat Kaul.
