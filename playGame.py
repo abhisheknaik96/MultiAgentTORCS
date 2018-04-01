@@ -19,7 +19,7 @@ gc.enable()
 # from configurations import *
 
 max_eps = 500
-max_steps_eps = 1000
+max_steps_eps = 3000
 epsilon_start = 0.9
 
 
@@ -28,9 +28,6 @@ def playGame(f_diagnostics, train_indicator, port=3101):    #1 means Train, 0 me
 	action_dim = 3  #Steering/Acceleration/Brake
 	state_dim = 29  #of sensors input
 	env_name = 'Torcs_Env'
-	# numAgents = 2
-	# agents = [DDPG(env_name, state_dim, action_dim) for i in xrange(numAgents)]
-	# agent = DDPG(env_name, state_dim, action_dim)
 
 	# Generate a Torcs environment
 	print("I have been asked to use port: ", port)
@@ -42,10 +39,6 @@ def playGame(f_diagnostics, train_indicator, port=3101):    #1 means Train, 0 me
 	client.get_servers_input(0)  # Get the initial input from torcs
 
 	obs = client.S.d  # Get the current full-observation from torcs
-
-	# print obs
-	# print '--\n\n'
-
 	ob = env.make_observation(obs)
 
 	# EXPLORE = total_explore
@@ -118,7 +111,7 @@ def playGame(f_diagnostics, train_indicator, port=3101):    #1 means Train, 0 me
 				break #Introduced by Anirban
 
 
-			#Add to replay buffer only if training (Is it necessary - don't think so)
+			# Add to replay buffer only if training 
 			# if (train_indicator):
 			# 	agent.perceive(s_t,a_t,r_t,s_t1,done) # Add experience to replay buffer
 
@@ -134,7 +127,7 @@ def playGame(f_diagnostics, train_indicator, port=3101):    #1 means Train, 0 me
 			if done:
 				break
 
-		#Saving the best model.
+		# Saving the best model.
 		if ((save_indicator==1) and (train_indicator ==1 )):
 			if (total_reward >= best_reward):
 				print("Now we save model with reward " + str(total_reward) + " previous best reward was " + str(best_reward))

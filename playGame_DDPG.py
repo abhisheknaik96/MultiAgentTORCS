@@ -22,13 +22,11 @@ gc.enable()
 
 # config parameters are printed in main
 
-def playGame(f_diagnostics, train_indicator, port=3101):    #1 means Train, 0 means simply Run
+def playGame(f_diagnostics, train_indicator, port=3101):    # 1 means Train, 0 means simply Run
 	
 	action_dim = 3  #Steering/Acceleration/Brake
 	state_dim = 29  #of sensors input
 	env_name = 'Torcs_Env'
-	# numAgents = 2
-	# agents = [DDPG(env_name, state_dim, action_dim) for i in xrange(numAgents)]
 	agent = DDPG(env_name, state_dim, action_dim)
 
 	# Generate a Torcs environment
@@ -74,7 +72,7 @@ def playGame(f_diagnostics, train_indicator, port=3101):    #1 means Train, 0 me
 		#Initializing the first state
 		# s_t = np.hstack((ob['angle'], ob['track'], ob['trackPos'], ob['speedX'], ob['speedY'],  ob['speedZ'], ob['wheelSpinVel']/100.0, ob['rpm']))
 		# s_t = np.hstack((ob.angle, ob.track, ob.trackPos, ob.speedX, ob.speedY,  ob.speedZ, ob.wheelSpinVel/100.0, ob.rpm))
-		#Counting the total reward and total steps in the current episode
+		# Counting the total reward and total steps in the current episode
 		total_reward = 0.
 		info = {'termination_cause':0}
 		distance_traversed = 0.
@@ -115,7 +113,7 @@ def playGame(f_diagnostics, train_indicator, port=3101):    #1 means Train, 0 me
 				break #Introduced by Anirban
 
 
-			#Add to replay buffer only if training (Is it necessary - don't think so)
+			# Add to replay buffer only if training
 			if (train_indicator):
 				agent.perceive(s_t,a_t,r_t,s_t1,done) # Add experience to replay buffer
 
@@ -131,7 +129,7 @@ def playGame(f_diagnostics, train_indicator, port=3101):    #1 means Train, 0 me
 			if done:
 				break
 
-		#Saving the best model.
+		# Saving the best model.
 		if ((save_indicator==1) and (train_indicator ==1 )):
 			if (total_reward >= best_reward):
 				print("Now we save model with reward " + str(total_reward) + " previous best reward was " + str(best_reward))
