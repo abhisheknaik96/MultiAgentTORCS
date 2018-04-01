@@ -6,8 +6,8 @@ This is a multi-agent version of TORCS, for multi-agent reinforcement learning. 
 
 ## Dependencies
 
-- TORCS 		(the simulator)
-- scr-client 	(the patch which creates a server-client model)
+- TORCS         (the simulator)
+- Simulated Car Racing modules  (the patch which creates a server-client model to expose the higher-level game features to the learning agent)
 
 ---
 
@@ -19,14 +19,14 @@ It is assumed that you have TORCS installed from the source code on a machine wi
 
 Install the scr-client as follows:
 
-1.	Download the scr-patch from [here](https://sourceforge.net/projects/cig/files/SCR%20Championship/Server%20Linux/2.1/scr-linux-patch.tgz/download).
-2.	Unpack the package scr-linux-patch.tgz in your base TORCS directory.
-3.	This will create a new directory called scr-patch.     
+1.  Download the scr-patch from [here](https://sourceforge.net/projects/cig/files/SCR%20Championship/Server%20Linux/2.1/scr-linux-patch.tgz/download).
+2.  Unpack the package scr-linux-patch.tgz in your base TORCS directory.
+3.  This will create a new directory called scr-patch.     
     `cd scr-patch`
-4.	`sh do_patch.sh` (`do_unpatch.sh` to revert the modifications)     
-5.	Move to the parent TORCS directory    
+4.  `sh do_patch.sh` (`do_unpatch.sh` to revert the modifications)     
+5.  Move to the parent TORCS directory    
     `cd ../`
-6.	Run the following commands:
+6.  Run the following commands:
     ```
     ./configure    
     make -j4    
@@ -36,31 +36,31 @@ Install the scr-client as follows:
 
 10 scr_server car should be available in the race configurations now.
 
-7.	Download the C++ client from [here](https://sourceforge.net/projects/cig/files/SCR%20Championship/Client%20C%2B%2B/2.0/).
-8.	Unpack the package `scr-client-cpp.tgz` in your base TORCS directory.
-9.	This will create a new directory called `scr-client-cpp`.     
+7.  Download the C++ client from [here](https://sourceforge.net/projects/cig/files/SCR%20Championship/Client%20C%2B%2B/2.0/).
+8.  Unpack the package `scr-client-cpp.tgz` in your base TORCS directory.
+9.  This will create a new directory called `scr-client-cpp`.     
     `cd scr-client-cpp`
-10.	`make -j4`
-11.	At this point, multiple clients can join an instance of the TORCS game by:
+10. `make -j4`
+11. At this point, multiple clients can join an instance of the TORCS game by:
     ```
     ./client    
     ./client port:3002
     ```
-	Typical values are between 3001 and 3010 (3001 is the default)
+    Typical values are between 3001 and 3010 (3001 is the default)
 
 
 ---
 
 ## Usage:
 
-1. 	Start a 'Quick Race' in TORCS in one terminal console (with the n agents being `scr_*`)    
+1.  Start a 'Quick Race' in TORCS in one terminal console (with the n agents being `scr_*`)    
     `torcs`    
     Close the TORCS window.
-2. 	From inside the multi-agent-torcs directory in one console:    
+2.  From inside the multi-agent-torcs directory in one console:    
     `python playGame.py 3001`
-3. 	From another console:    
+3.  From another console:    
     `python playGame.py 3002`    
-	And so on...
+    And so on...
 
 In the game loop in `playGame.py`, the action at every timestep `a_t` can be supplied by any algorithm.
 
@@ -73,7 +73,7 @@ In the game loop in `playGame.py`, the action at every timestep `a_t` can be sup
     `python playGame_DDPG.py 3001`    
     or any other port.
 
-Sample results for a DDPG agent learned to drive in traffic are [available here](https://www.youtube.com/playlist?list=PL64VfM4ZEjDvlALjskRm0g4Tfay14_I2r).
+Sample results for a DDPG agent learned to drive in traffic are [available here](https://goo.gl/piuQmg).
 
 ---
 
@@ -85,4 +85,4 @@ Do check out [the wiki](https://github.com/abhisheknaik96/MultiAgentTORCS/wiki) 
 
 ## Credits
 
-The multi-agent learning simulator was developed by [Abhishek Naik](http://abhisheknaik96.github.io), extending `ugo-nama-kun`'s [`gym-torcs`](ugo-nama-kun), under the guidance of Anirban Santara, Balaraman Ravindran, and Bharat Kaul.
+The multi-agent learning simulator was developed by [Abhishek Naik](http://abhisheknaik96.github.io), extending `ugo-nama-kun`'s [`gym-torcs`](https://github.com/ugo-nama-kun/gym_torcs), and `yanpanlau`'s [project](https://yanpanlau.github.io/2016/10/11/Torcs-Keras.html) under the guidance of Anirban Santara, Balaraman Ravindran, and Bharat Kaul.
