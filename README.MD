@@ -1,4 +1,4 @@
-# Multi-agent TORCS for RL
+# MADRaS - Multi-Agent DRiving Simulator
 ---
 
 This is a multi-agent version of TORCS, for multi-agent reinforcement learning. In other words, the multiple cars running simultaneously on a track can be controlled by different control algorithms - heuristic, reinforcement learning-based, etc.
@@ -85,4 +85,4 @@ Do check out [the wiki](https://github.com/abhisheknaik96/MultiAgentTORCS/wiki) 
 
 ## Credits
 
-The multi-agent learning simulator was developed by [Abhishek Naik](http://abhisheknaik96.github.io), extending `ugo-nama-kun`'s [`gym-torcs`](https://github.com/ugo-nama-kun/gym_torcs), and `yanpanlau`'s [project](https://yanpanlau.github.io/2016/10/11/Torcs-Keras.html) under the guidance of Anirban Santara, Balaraman Ravindran, and Bharat Kaul.
+The multi-agent learning simulator was developed by [Abhishek Naik](http://abhisheknaik96.github.io), extending `ugo-nama-kun`'s [`gym-torcs`](https://github.com/ugo-nama-kun/gym_torcs), and `yanpanlau`'s [project](https://yanpanlau.github.io/2016/10/11/Torcs-Keras.html) under the guidance of Anirban Santara, Balaraman Ravindran, and Bharat Kaul, at Intel Labs.
