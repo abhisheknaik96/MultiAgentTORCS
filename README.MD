@@ -62,7 +62,8 @@ Install the scr-client as follows:
     `python playGame.py 3002`    
     And so on...
 
-In the game loop in `playGame.py`, the action at every timestep `a_t` can be supplied by any algorithm.
+In the game loop in `playGame.py`, the action at every timestep `a_t` can be supplied by any algorithm.    
+Note : `playGame_DDPG.py` has the code for a sample RL agent learning with the [DDPG algorithm](http://proceedings.mlr.press/v32/silver14.pdf), while `playGame.py` has a dummy agent which just moves straight at every timestep.
 
 ---
 
@@ -73,7 +74,7 @@ In the game loop in `playGame.py`, the action at every timestep `a_t` can be sup
     `python playGame_DDPG.py 3001`    
     or any other port.
 
-Sample results for a DDPG agent learned to drive in traffic are [available here](https://goo.gl/piuQmg).
+Sample results for a DDPG agent learned to drive in traffic are [available here](https://goo.gl/piuQmg).       
 
 ---
 
