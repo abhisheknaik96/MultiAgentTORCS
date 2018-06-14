@@ -98,7 +98,7 @@ def playGame(f_diagnostics, train_indicator, port=3101):    #1 means Train, 0 me
 			analyse_info(info, printing=False)
 
 			s_t1 = np.hstack((ob.angle, ob.track, ob.trackPos, ob.speedX, ob.speedY,  ob.speedZ, ob.wheelSpinVel/100.0, ob.rpm))
-			distance_traversed += ob.speedX*np.cos(ob.angle) #Assuming 1 step = 1 second
+			distance_traversed += ob.distRaced
 			speed_array.append(ob.speedX*np.cos(ob.angle))
 			trackPos_array.append(ob.trackPos)
 
@@ -150,6 +150,7 @@ def playGame(f_diagnostics, train_indicator, port=3101):    #1 means Train, 0 me
 
 		s_t = np.hstack((ob.angle, ob.track, ob.trackPos, ob.speedX, ob.speedY,  ob.speedZ, ob.wheelSpinVel/100.0, ob.rpm))
 
+		##uncomment this to get some statistics per episode like total distance traversed, average speed, distance from center of track, etc
 		# document_episode(i, distance_traversed, speed_array, trackPos_array, info, running_avg_reward, f_diagnostics)
 
 	env.end()  # This is for shutting down TORCS
@@ -189,7 +190,7 @@ if __name__ == "__main__":
 		print "Usage : python %s <port>" % (sys.argv[0])
 		sys.exit()
 
-	# f_diagnostics = open('output_logs/diagnostics_for_window_' + sys.argv[1]+'_with_fixed_episode_length', 'w') #Add date and time to file name
+	# f_diagnostics = open('output_logs/diagnostics', 'w') #Add date and time to file name
 	f_diagnostics = ""
 	playGame(f_diagnostics, train_indicator=1, port=port)
 	# f_diagnostics.close()

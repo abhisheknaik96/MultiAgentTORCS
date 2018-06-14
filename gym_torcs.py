@@ -9,8 +9,6 @@ import os
 import time
 import random
 
-import theano
-
 class TorcsEnv:
     terminal_judge_start = 100      # If after 100 timestep still no progress, terminated
     termination_limit_progress = 1  # [km/h], episode terminates if car is running slower than this limit
@@ -39,13 +37,13 @@ class TorcsEnv:
         if throttle is False:                           # Throttle is generally True
             self.action_space = spaces.Box(low=-1.0, high=1.0, shape=(1,))
         else:
-            high = np.array([1., 1., 1.], dtype=theano.config.floatX)
-            low = np.array([-1., 0., 0.], dtype=theano.config.floatX)
+            high = np.array([1., 1., 1.])
+            low = np.array([-1., 0., 0.])
             self.action_space = spaces.Box(low=low, high=high)              # steer, accel, brake (according to agent_to_torcs() (check the function definition))
 
         if vision is False:                             # Vision is generally False
-            # high = np.array([1., np.inf, np.inf, np.inf, 1., np.inf, 1., np.inf], dtype=theano.config.floatX)
-            # low = np.array([0., -np.inf, -np.inf, -np.inf, 0., -np.inf, 0., -np.inf], dtype=theano.config.floatX)
+            # high = np.array([1., np.inf, np.inf, np.inf, 1., np.inf, 1., np.inf])
+            # low = np.array([0., -np.inf, -np.inf, -np.inf, 0., -np.inf, 0., -np.inf])
             # self.observation_space = spaces.Box(low=low, high=high)
             high = np.inf*np.ones(self.obs_dim)
             low = -high
