@@ -1,5 +1,4 @@
 # MADRaS - Multi-Agent DRiving Simulator
----
 
 This is a multi-agent version of TORCS, for multi-agent reinforcement learning. In other words, the multiple cars running simultaneously on a track can be controlled by different control algorithms - heuristic, reinforcement learning-based, etc.
 
@@ -13,7 +12,7 @@ This is a multi-agent version of TORCS, for multi-agent reinforcement learning. 
 
 ## Installation
 
-It is assumed that you have TORCS installed from the source code on a machine with Ubuntu 14.04/16.04 LTS.
+It is assumed that you have TORCS installed (tested on [version 1.3.6](https://github.com/UWEcoCAR/car-simulator/tree/master/torcs-1.3.6)) from the source code on a machine with Ubuntu 14.04/16.04 LTS.
 
 ### scr-client
 
@@ -63,8 +62,10 @@ Install the scr-client as follows:
     And so on...
 
 In the game loop in `playGame.py`, the action at every timestep `a_t` can be supplied by any algorithm.    
-Note : `playGame_DDPG.py` has the code for a sample RL agent learning with the [DDPG algorithm](http://proceedings.mlr.press/v32/silver14.pdf), while `playGame.py` has a dummy agent which just moves straight at every timestep.
 
+Note : 
+1. `playGame_DDPG.py` has the code for a sample RL agent learning with the [DDPG algorithm](http://proceedings.mlr.press/v32/silver14.pdf), while `playGame.py` has a dummy agent which just moves straight at every timestep.
+2. Headless rendering for multiple-agent learning is under development. Contributions and ideas would be greatly appreaciated! 
 ---
 
 ### For single-agent learning:
