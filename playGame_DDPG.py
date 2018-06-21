@@ -79,9 +79,9 @@ def playGame(f_diagnostics, train_indicator, port=3101):    # 1 means Train, 0 m
 		speed_array=[]
 		trackPos_array=[]
 		
-		print '\n\nStarting new episode...\n'
+		print('\n\nStarting new episode...\n')
 
-		for step in xrange(max_steps):
+		for step in range(max_steps):
 
 			# Take noisy actions during training
 			if (train_indicator):
@@ -143,9 +143,9 @@ def playGame(f_diagnostics, train_indicator, port=3101):    # 1 means Train, 0 m
 		print("Total Step: " + str(totalSteps))
 		print("")
 
-		print info
+		print(info)
 		if 'termination_cause' in info.keys() and info['termination_cause']=='hardReset':
-			print 'Hard reset by some agent'
+			print('Hard reset by some agent')
 			ob, client = env.reset(client=client) 
 		else:
 			ob, client = env.reset(client=client, relaunch=True) 
@@ -187,16 +187,16 @@ if __name__ == "__main__":
 		port = int(sys.argv[1])
 	except Exception as e:
 		# raise e
-		print "Usage : python %s <port>" % (sys.argv[0])
+		print("Usage : python %s <port>" % (sys.argv[0]))
 		sys.exit()
 
-	print 'is_training : ' + str(is_training)
-	print 'Starting best_reward : ' + str(start_reward)
-	print( total_explore )
-	print( max_eps )
-	print( max_steps_eps )
-	print( epsilon_start )
-	print 'config_file : ' + str(configFile)
+	print('is_training : ' + str(is_training))
+	print('Starting best_reward : ' + str(start_reward))
+	print(total_explore)
+	print(max_eps)
+	print(max_steps_eps)
+	print(epsilon_start)
+	print('config_file : ' + str(configFile))
 
 	# f_diagnostics = open('output_logs/diagnostics_for_window_' + sys.argv[1]+'_with_fixed_episode_length', 'w') #Add date and time to file name
 	f_diagnostics = ""

@@ -41,7 +41,7 @@ class CriticNetwork:
         weight_decay = tf.add_n([L2 * tf.nn.l2_loss(var) for var in self.net])
         self.cost = tf.reduce_mean(tf.square(self.y_input - self.q_value_output)) + weight_decay
         self.optimizer = tf.train.AdamOptimizer(LEARNING_RATE).minimize(self.cost)
-	'''
+        '''
 	self.optimizer = tf.train.AdamOptimizer(LEARNING_RATE)
         self.parameters_gradients = self.optimizer.compute_gradients(self.cost)
 
@@ -50,7 +50,7 @@ class CriticNetwork:
                 self.parameters_gradients[i] = (tf.clip_by_value(grad, -5.0,5.0),var)
 
         self.train_op = self.optimizer.apply_gradients(self.parameters_gradients)
-	'''
+        '''
         self.action_gradients = tf.gradients(self.q_value_output,self.action_input)
 
     def create_q_network(self,state_dim,action_dim):

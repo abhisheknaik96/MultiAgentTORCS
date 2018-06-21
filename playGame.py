@@ -77,9 +77,9 @@ def playGame(f_diagnostics, train_indicator, port=3101):    #1 means Train, 0 me
 		speed_array=[]
 		trackPos_array=[]
 		
-		print '\n\nStarting new episode...\n'
+		print('\n\nStarting new episode...\n')
 
-		for step in xrange(max_steps):
+		for step in range(max_steps):
 
 			# Take noisy actions during training
 			# if (train_indicator):
@@ -98,7 +98,7 @@ def playGame(f_diagnostics, train_indicator, port=3101):    #1 means Train, 0 me
 			analyse_info(info, printing=False)
 
 			s_t1 = np.hstack((ob.angle, ob.track, ob.trackPos, ob.speedX, ob.speedY,  ob.speedZ, ob.wheelSpinVel/100.0, ob.rpm))
-			distance_traversed += ob.distRaced
+			distance_traversed += ob.speedX*np.cos(ob.angle) #Assuming 1 step = 1 second
 			speed_array.append(ob.speedX*np.cos(ob.angle))
 			trackPos_array.append(ob.trackPos)
 
@@ -107,7 +107,7 @@ def playGame(f_diagnostics, train_indicator, port=3101):    #1 means Train, 0 me
 			if (math.isnan( r_t )):
 				r_t = 0.0
 				for bad_r in range( 50 ):
-					print( 'Bad Reward Found' )
+					print("Bad Reward Found")
 				break #Introduced by Anirban
 
 
@@ -141,9 +141,9 @@ def playGame(f_diagnostics, train_indicator, port=3101):    #1 means Train, 0 me
 		print("Total Step: " + str(totalSteps))
 		print("")
 
-		print info
+		print(info)
 		if 'termination_cause' in info.keys() and info['termination_cause']=='hardReset':
-			print '\n\n***Hard reset by some agent***\n\n'
+			print('\n\n***Hard reset by some agent***\n\n')
 			ob, client = env.reset(client=client) 
 		else:
 			ob, client = env.reset(client=client, relaunch=True) 
@@ -187,7 +187,7 @@ if __name__ == "__main__":
 		port = int(sys.argv[1])
 	except Exception as e:
 		# raise e
-		print "Usage : python %s <port>" % (sys.argv[0])
+		print("Usage : python %s <port>" % (sys.argv[0]))
 		sys.exit()
 
 	# f_diagnostics = open('output_logs/diagnostics', 'w') #Add date and time to file name
