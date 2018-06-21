@@ -15,9 +15,6 @@ import sys
 import gc
 gc.enable()
 
-
-# from configurations import *
-
 max_eps = 500
 max_steps_eps = 3000
 epsilon_start = 0.9
@@ -26,7 +23,7 @@ epsilon_start = 0.9
 def playGame(f_diagnostics, train_indicator, port=3101):    #1 means Train, 0 means simply Run
 	
 	action_dim = 3  #Steering/Acceleration/Brake
-	state_dim = 29  #of sensors input
+	state_dim = 29  #Number of sensors input
 	env_name = 'Torcs_Env'
 
 	# Generate a Torcs environment
@@ -55,22 +52,8 @@ def playGame(f_diagnostics, train_indicator, port=3101):    #1 means Train, 0 me
 	print("TORCS Experiment Start.")
 	for i in range(episode_count):
 
-		save_indicator = 0
-			
-		# env.reset(client=client, relaunch=True)	
-		# random_number = random.random()
-		# eps_early = max(epsilon,epsilon_steady_state) #At least 0.01 
-		# if (random_number < (1.0-eps_early)) and (train_indicator == 1): #During training, at most 99% of the time, early stopping would be engaged 
-		#     early_stop = 1
-		# else: 
-		#     early_stop = 0
+		save_indicator = 0 # 1 to save the learned weights, 0 otherwise
 		early_stop = 1
-		# print("Episode : " + str(i) + " Replay Buffer " + str(agent.replay_buffer.count()) + ' Early Stopping: ' + str(early_stop) +  ' Epsilon: ' + str(eps_early) +  ' RN: ' + str(random_number)  )
-
-		#Initializing the first state
-		# s_t = np.hstack((ob['angle'], ob['track'], ob['trackPos'], ob['speedX'], ob['speedY'],  ob['speedZ'], ob['wheelSpinVel']/100.0, ob['rpm']))
-		# s_t = np.hstack((ob.angle, ob.track, ob.trackPos, ob.speedX, ob.speedY,  ob.speedZ, ob.wheelSpinVel/100.0, ob.rpm))
-		#Counting the total reward and total steps in the current episode
 		total_reward = 0.
 		info = {'termination_cause':0}
 		distance_traversed = 0.
@@ -80,21 +63,12 @@ def playGame(f_diagnostics, train_indicator, port=3101):    #1 means Train, 0 me
 		print('\n\nStarting new episode...\n')
 
 		for step in range(max_steps):
-
-			# Take noisy actions during training
-			# if (train_indicator):
-			#     epsilon -= 1.0 / EXPLORE
-			#     epsilon = max(epsilon, epsilon_steady_state) 
-			#     a_t = agent.noise_action(s_t,epsilon) #Take noisy actions during training
-			# else:
-			#     a_t = agent.action(s_t)
+			#Hard-coded steer=0, accel=1 and brake=0, define a_t as per any other algorithm
 			a_t = np.asarray([0.0, 1.0, 0.0])		# [steer, accel, brake]
 
 			ob, r_t, done, info = env.step(step, client, a_t, early_stop)
 			if done:
 				break
-			# print done
-			# print 'Action taken'
 			analyse_info(info, printing=False)
 
 			s_t1 = np.hstack((ob.angle, ob.track, ob.trackPos, ob.speedX, ob.speedY,  ob.speedZ, ob.wheelSpinVel/100.0, ob.rpm))
@@ -102,19 +76,12 @@ def playGame(f_diagnostics, train_indicator, port=3101):    #1 means Train, 0 me
 			speed_array.append(ob.speedX*np.cos(ob.angle))
 			trackPos_array.append(ob.trackPos)
 
-
 			#Checking for nan rewards: TODO: This was actually below the following block
 			if (math.isnan( r_t )):
 				r_t = 0.0
 				for bad_r in range( 50 ):
 					print("Bad Reward Found")
 				break #Introduced by Anirban
-
-
-			# Add to replay buffer only if training 
-			# if (train_indicator):
-			# 	agent.perceive(s_t,a_t,r_t,s_t1,done) # Add experience to replay buffer
-
 
 			total_reward += r_t
 			s_t = s_t1
@@ -153,7 +120,7 @@ def playGame(f_diagnostics, train_indicator, port=3101):    #1 means Train, 0 me
 		##uncomment this to get some statistics per episode like total distance traversed, average speed, distance from center of track, etc
 		# document_episode(i, distance_traversed, speed_array, trackPos_array, info, running_avg_reward, f_diagnostics)
 
-	env.end()  # This is for shutting down TORCS
+	env.end()  # Shut down TORCS
 	print("Finish.")
 
 def document_episode(episode_no, distance_traversed, speed_array, trackPos_array, info, running_avg_reward, f_diagnostics):
