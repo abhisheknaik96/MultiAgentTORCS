@@ -29,10 +29,6 @@ class TorcsEnv:
 
         self.currState = None 
 
-        # os.system(u'torcs -nofuel -nodamage -nolaptime &')
-        # time.sleep(1.0)
-        # os.system(u'sh scripts/autostart.sh')
-
         # Now the action_space and observation_space are actually being used, just like in OpenAI's gym 
         if throttle is False:                           # Throttle is generally True
             self.action_space = spaces.Box(low=-1.0, high=1.0, shape=(1,))
@@ -41,10 +37,7 @@ class TorcsEnv:
             low = np.array([-1., 0., 0.])
             self.action_space = spaces.Box(low=low, high=high)              # steer, accel, brake (according to agent_to_torcs() (check the function definition))
 
-        if vision is False:                             # Vision is generally False
-            # high = np.array([1., np.inf, np.inf, np.inf, 1., np.inf, 1., np.inf])
-            # low = np.array([0., -np.inf, -np.inf, -np.inf, 0., -np.inf, 0., -np.inf])
-            # self.observation_space = spaces.Box(low=low, high=high)
+        if vision is False:                             # Vision is True when you need the images from the simulator 
             high = np.inf*np.ones(self.obs_dim)
             low = -high
             self.observation_space = spaces.Box(low, high)
