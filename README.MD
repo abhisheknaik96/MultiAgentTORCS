@@ -7,6 +7,7 @@ This is a multi-agent version of TORCS, for multi-agent reinforcement learning. 
 
 - TORCS         (the simulator)
 - Simulated Car Racing modules  (the patch which creates a server-client model to expose the higher-level game features to the learning agent)
+- Python3 (all future development will be in Python3; an old Python2 branch also exists [here](https://github.com/abhisheknaik96/MultiAgentTORCS/tree/python2Version)) 
 
 ---
 
@@ -56,9 +57,9 @@ Install the scr-client as follows:
     `torcs`    
     Close the TORCS window.
 2.  From inside the multi-agent-torcs directory in one console:    
-    `python playGame.py 3001`
+    `python3 playGame.py 3001`
 3.  From another console:    
-    `python playGame.py 3002`    
+    `python3 playGame.py 3002`    
     And so on...
 
 In the game loop in `playGame.py`, the action at every timestep `a_t` can be supplied by any algorithm.    
@@ -72,7 +73,7 @@ Note :
 
 1.   Start a 'Quick Race' in TORCS in one terminal console. Choose only one `scr` car and as many as traffic cars as you want (preferably `chenyi*`<sup>1</sup>, since they're programmed to follow individual lanes at speeds low enough for the agent to learn to overtake)
 2.  From inside the multi-agent-torcs directory in one console:    
-    `python playGame_DDPG.py 3001`    
+    `python3 playGame_DDPG.py 3001`    
     or any other port.
 
 Sample results for a DDPG agent learned to drive in traffic are [available here](https://goo.gl/piuQmg).       
@@ -88,3 +89,8 @@ Do check out [the wiki](https://github.com/abhisheknaik96/MultiAgentTORCS/wiki) 
 ## Credits
 
 The multi-agent learning simulator was developed by [Abhishek Naik](http://abhisheknaik96.github.io), extending `ugo-nama-kun`'s [`gym-torcs`](https://github.com/ugo-nama-kun/gym_torcs), and `yanpanlau`'s [project](https://yanpanlau.github.io/2016/10/11/Torcs-Keras.html) under the guidance of Anirban Santara, Balaraman Ravindran, and Bharat Kaul, at Intel Labs.
+
+### Contributors
+
+We believe MADRaS will enable new and veteran researchers in academia and the industry to make the dream of fully autonomous driving a reality. Towards the same, we believe that unlike the closed-source secretive technologies of the big players, this project will enable the community to work towards this goal *together*, pooling in thoughts and resources to achieve this dream faster. Hence, we're highly appreciative of all sorts of contributions, big or small, from fellow researchers and users :
+- [Meha Kaushik](https://github.com/MehaKaushik)

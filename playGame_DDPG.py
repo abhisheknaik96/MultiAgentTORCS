@@ -25,7 +25,7 @@ gc.enable()
 def playGame(f_diagnostics, train_indicator, port=3101):    # 1 means Train, 0 means simply Run
 	
 	action_dim = 3  #Steering/Acceleration/Brake
-	state_dim = 29  #of sensors input
+	state_dim = 29  #Number of sensors input
 	env_name = 'Torcs_Env'
 	agent = DDPG(env_name, state_dim, action_dim)
 
@@ -58,20 +58,7 @@ def playGame(f_diagnostics, train_indicator, port=3101):    # 1 means Train, 0 m
 	for i in range(episode_count):
 
 		save_indicator = 0
-			
-		# env.reset(client=client, relaunch=True)	
-		# random_number = random.random()
-		# eps_early = max(epsilon,epsilon_steady_state) #At least 0.01 
-		# if (random_number < (1.0-eps_early)) and (train_indicator == 1): #During training, at most 99% of the time, early stopping would be engaged 
-		#     early_stop = 1
-		# else: 
-		#     early_stop = 0
 		early_stop = 1
-		# print("Episode : " + str(i) + " Replay Buffer " + str(agent.replay_buffer.count()) + ' Early Stopping: ' + str(early_stop) +  ' Epsilon: ' + str(eps_early) +  ' RN: ' + str(random_number)  )
-
-		#Initializing the first state
-		# s_t = np.hstack((ob['angle'], ob['track'], ob['trackPos'], ob['speedX'], ob['speedY'],  ob['speedZ'], ob['wheelSpinVel']/100.0, ob['rpm']))
-		# s_t = np.hstack((ob.angle, ob.track, ob.trackPos, ob.speedX, ob.speedY,  ob.speedZ, ob.wheelSpinVel/100.0, ob.rpm))
 		# Counting the total reward and total steps in the current episode
 		total_reward = 0.
 		info = {'termination_cause':0}
@@ -79,9 +66,9 @@ def playGame(f_diagnostics, train_indicator, port=3101):    # 1 means Train, 0 m
 		speed_array=[]
 		trackPos_array=[]
 		
-		print '\n\nStarting new episode...\n'
+		print('\n\nStarting new episode...\n')
 
-		for step in xrange(max_steps):
+		for step in range(max_steps):
 
 			# Take noisy actions during training
 			if (train_indicator):
@@ -89,14 +76,11 @@ def playGame(f_diagnostics, train_indicator, port=3101):    # 1 means Train, 0 m
 			    epsilon = max(epsilon, epsilon_steady_state) 
 			    a_t = agent.noise_action(s_t,epsilon) #Take noisy actions during training
 			else:
-			    a_t = agent.action(s_t)
-			# a_t = np.asarray([0.0, 1.0, 0.0])		# [steer, accel, brake]
+			    a_t = agent.action(s_t)		# a_t is of the form: [steer, accel, brake]
 
 			ob, r_t, done, info = env.step(step, client, a_t, early_stop)
 			if done:
 				break
-			# print done
-			# print 'Action taken'
 			analyse_info(info, printing=False)
 
 			s_t1 = np.hstack((ob.angle, ob.track, ob.trackPos, ob.speedX, ob.speedY,  ob.speedZ, ob.wheelSpinVel/100.0, ob.rpm))
@@ -143,9 +127,9 @@ def playGame(f_diagnostics, train_indicator, port=3101):    # 1 means Train, 0 m
 		print("Total Step: " + str(totalSteps))
 		print("")
 
-		print info
+		print(info)
 		if 'termination_cause' in info.keys() and info['termination_cause']=='hardReset':
-			print 'Hard reset by some agent'
+			print('Hard reset by some agent')
 			ob, client = env.reset(client=client) 
 		else:
 			ob, client = env.reset(client=client, relaunch=True) 
@@ -153,7 +137,7 @@ def playGame(f_diagnostics, train_indicator, port=3101):    # 1 means Train, 0 m
 
 		# document_episode(i, distance_traversed, speed_array, trackPos_array, info, running_avg_reward, f_diagnostics)
 
-	env.end()  # This is for shutting down TORCS
+	env.end()  # Shut down TORCS
 	print("Finish.")
 
 def document_episode(episode_no, distance_traversed, speed_array, trackPos_array, info, running_avg_reward, f_diagnostics):
@@ -187,16 +171,16 @@ if __name__ == "__main__":
 		port = int(sys.argv[1])
 	except Exception as e:
 		# raise e
-		print "Usage : python %s <port>" % (sys.argv[0])
+		print("Usage : python %s <port>" % (sys.argv[0]))
 		sys.exit()
 
-	print 'is_training : ' + str(is_training)
-	print 'Starting best_reward : ' + str(start_reward)
-	print( total_explore )
-	print( max_eps )
-	print( max_steps_eps )
-	print( epsilon_start )
-	print 'config_file : ' + str(configFile)
+	print('is_training : ' + str(is_training))
+	print('Starting best_reward : ' + str(start_reward))
+	print(total_explore)
+	print(max_eps)
+	print(max_steps_eps)
+	print(epsilon_start)
+	print('config_file : ' + str(configFile))
 
 	# f_diagnostics = open('output_logs/diagnostics_for_window_' + sys.argv[1]+'_with_fixed_episode_length', 'w') #Add date and time to file name
 	f_diagnostics = ""
