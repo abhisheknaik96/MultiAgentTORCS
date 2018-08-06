@@ -35,11 +35,9 @@ class ActorNetwork:
     def create_training_method(self):
         self.q_gradient_input = tf.placeholder("float",[None,self.action_dim])
         self.parameters_gradients = tf.gradients(self.action_output,self.net,-self.q_gradient_input)
-        '''        
-        for i, grad in enumerate(self.parameters_gradients):
+        '''for i, grad in enumerate(self.parameters_gradients):
             if grad is not None:
-                self.parameters_gradients[i] = tf.clip_by_value(grad, -2.0,2.0)
-        '''
+                self.parameters_gradients[i] = tf.clip_by_value(grad, -2.0,2.0)'''
         self.optimizer = tf.train.AdamOptimizer(LEARNING_RATE).apply_gradients(zip(self.parameters_gradients,self.net))
     
     def create_network(self,state_dim,action_dim):
@@ -95,6 +93,9 @@ class ActorNetwork:
         # action_output = tf.concat(1, [steer, accel, brake])
         action_output = tf.concat([steer, accel, brake], 1)
         return state_input,action_output,target_update,target_net
+
+
+
 
     def update_target(self):
         self.sess.run(self.target_update)

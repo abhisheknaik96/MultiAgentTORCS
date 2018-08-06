@@ -16,7 +16,7 @@ class TorcsEnv:
 
     initial_reset = False
 
-    obs_dim = 29
+    obs_dim = 65
     act_dim = 3
 
     def __init__(self, vision=False, throttle=False, gear_change=False):
@@ -210,16 +210,8 @@ class TorcsEnv:
         return self.observation
 
     def reset_torcs(self):
-       #print("relaunch torcs")
+        print("relaunch torcs")
         os.system('pkill torcs')
-        time.sleep(0.5)
-        if self.vision is True:
-            os.system('torcs -nofuel -nodamage -nolaptime -vision &')
-        else:
-            os.system('torcs -nofuel -nolaptime &')
-        time.sleep(0.5)
-        os.system('sh scripts/autostart.sh')
-        time.sleep(0.5)
 
     def agent_to_torcs(self, u):
         torcs_action = {'steer': u[0]}
