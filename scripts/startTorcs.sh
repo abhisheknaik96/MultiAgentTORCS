@@ -6,7 +6,7 @@ do
 	  : #echo "Process is running."
 	else
 	  echo "Process is not running."
-	  cd /home/meha/vtorcs2 && ./torcs & sh autostart.sh
+	  torcs & sh autostart.sh
           	  	  
 	fi
 done;

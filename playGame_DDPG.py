@@ -81,8 +81,7 @@ def playGame(f_diagnostics, train_indicator, port=3101):    # 1 means Train, 0 m
 			    epsilon = max(epsilon, epsilon_steady_state) 
 			    a_t = agent.noise_action(s_t,epsilon) #Take noisy actions during training
 			else:
-			    a_t = agent.action(s_t)
-			# a_t = np.asarray([0.0, 1.0, 0.0])		# [steer, accel, brake]
+			    a_t = agent.action(s_t)	# [steer, accel, brake]
 			try:
 				ob, r_t, done, info = env.step(step, client, a_t, early_stop)
 				if done:
@@ -96,14 +95,12 @@ def playGame(f_diagnostics, train_indicator, port=3101):    # 1 means Train, 0 m
 				speed_array.append(ob.speedX*np.cos(ob.angle))
 				trackPos_array.append(ob.trackPos)
 
-
 			#Checking for nan rewards: TODO: This was actually below the following block
 				if (math.isnan( r_t )):
 					r_t = 0.0
 					for bad_r in range( 50 ):
 						print( 'Bad Reward Found' )
 					break #Introduced by Anirban
-
 
 			# Add to replay buffer only if training
 				if (train_indicator):
@@ -133,9 +130,10 @@ def playGame(f_diagnostics, train_indicator, port=3101):    # 1 means Train, 0 m
 			if done:
 				break
 
-		# Saving the best model.
+
 		if ((save_indicator==1) and (train_indicator ==1 )):
-			#if (total_reward >= best_reward):
+                        # Uncomment this for saving only the best model.
+			#if (total_reward >= best_reward): 
 			#	print("Now we save model with reward " + str(total_reward) + " previous best reward was " + str(best_reward))
 			best_reward = total_reward
 			if(i%300 == 0):
