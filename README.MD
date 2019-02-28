@@ -2,6 +2,7 @@
 
 This is a multi-agent version of TORCS, for multi-agent reinforcement learning. In other words, the multiple cars running simultaneously on a track can be controlled by different control algorithms - heuristic, reinforcement learning-based, etc.
 
+**Please check out the updated version of MADRaS [here](https://github.com/madras-simulator/MADRaS)!**
 
 ## Dependencies
 
