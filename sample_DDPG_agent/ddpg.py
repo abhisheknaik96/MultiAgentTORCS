@@ -13,7 +13,7 @@ import math, random
 from critic_network import CriticNetwork 
 from actor_network import ActorNetwork
 from ReplayBuffer import ReplayBuffer
-from configurations import save_location
+#from configurations import save_location
 
 
 # Hyper Parameters:
@@ -26,14 +26,14 @@ GAMMA = 0.99
 
 class DDPG:
     """docstring for DDPG"""
-    def __init__(self, env_name, state_dim,action_dim):
+    def __init__(self, env_name, state_dim,action_dim,save_location):
         self.name = 'DDPG' # name for uploading results
         self.env_name = env_name
         # Randomly initialize actor network and critic network
         # with both their target networks
         self.state_dim = state_dim
         self.action_dim = action_dim
-        
+        self.save_location = save_location
         # Ensure action bound is symmetric
         self.time_step = 0 
         self.sess = tf.InteractiveSession()
@@ -48,8 +48,8 @@ class DDPG:
         self.OU = OU()
         
         # loading networks
-        self.saver = tf.train.Saver()
-        checkpoint = tf.train.get_checkpoint_state(save_location)
+        self.saver = tf.train.Saver(max_to_keep=0)
+        checkpoint = tf.train.get_checkpoint_state(self.save_location)
         if checkpoint and checkpoint.model_checkpoint_path:
             self.saver.restore(self.sess, checkpoint.model_checkpoint_path)
             print("Successfully loaded:", checkpoint.model_checkpoint_path)
@@ -93,8 +93,8 @@ class DDPG:
         self.actor_network.update_target()
         self.critic_network.update_target()
             
-    def saveNetwork(self):
-        self.saver.save(self.sess, save_location + self.env_name + 'network' + '-ddpg', global_step = self.time_step)
+    def saveNetwork(self,i):
+        self.saver.save(self.sess, self.save_location + 'network' + str(i)+'DDPG.ckpt', global_step = self.time_step,)
 
 
     def action(self,state):

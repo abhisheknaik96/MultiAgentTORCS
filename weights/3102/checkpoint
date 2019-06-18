@@ -1,0 +1,2 @@
+model_checkpoint_path: "network3900DDPG.ckpt-375834"
+all_model_checkpoint_paths: "network3900DDPG.ckpt-375834"

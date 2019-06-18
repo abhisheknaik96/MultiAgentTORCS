@@ -122,7 +122,7 @@ class Client(object):
         # If you don't like the option defaults,  change them here.
         self.vision = vision
 
-        self.host= u'localhost'
+        self.host= "localhost"
         self.port= 3001
         self.sid= u'SCR'
         self.maxEpisodes=1 # "Maximum number of learning episodes to perform"
@@ -152,7 +152,7 @@ class Client(object):
         # == Initialize Connection To Server ==
         self.so.settimeout(1)
 
-        n_fail = 3
+        n_fail = 100
         while True:
             # This string establishes track sensor angles! You can customize them.
             #a= "-90 -75 -60 -45 -30 -20 -15 -10 -5 0 5 10 15 20 30 45 60 75 90"
@@ -173,22 +173,22 @@ class Client(object):
                 print(u"Waiting for server on %d............" % self.port)
                 print(u"Count Down : " + str(n_fail))
                 if n_fail < 0:
-                    print(u"relaunch torcs")
+                    print("relaunch torcs")
                     os.system(u'pkill torcs')
                     time.sleep(1.0)
-                    if self.vision is False:
-                        os.system(u'torcs -nofuel -nodamage -nolaptime &')
-                    else:
-                        os.system(u'torcs -nofuel -nodamage -nolaptime -vision &')
+                    #if self.vision is False:
+                    #    os.system(u'cd ~/trafficsimulator/vtorcs-nosegfault && ./torcs  -nofuel -nodamage -nolaptime &')
+                    #else:
+                    #    os.system(u'cd ~/trafficsimulator/vtorcs-nosegfault && ./torcs -nofuel -nodamage -nolaptime -vision &')
 
-                    time.sleep(1.0)
-                    os.system(u'sh scripts/autostart.sh')
-                    n_fail = 3
+                    #time.sleep(1.0)
+                    #os.system(u'sh scripts/autostart.sh')
+                    n_fail = 100
                 n_fail -= 1
 
             identify = u'***identified***'
             if identify in sockdata:
-                print(u"Client connected on %d.............." % self.port)
+                print("Client connected on %d.............." % self.port)
                 break
 
     def parse_the_command_line(self):
@@ -224,7 +224,7 @@ class Client(object):
                 if opt[0] == u'-v' or opt[0] == u'--version':
                     print(u'%s %s' % (sys.argv[0], version))
                     sys.exit(0)
-        except ValueError as why:
+        except ValueError as  why:
             print(u'Bad parameter \'%s\' for option %s: %s\n%s' % (
                                        opt[1], opt[0], why, usage))
             sys.exit(-1)
@@ -234,11 +234,12 @@ class Client(object):
 
     def get_servers_input(self, step):
         u'''Server's input is stored in a ServerState object'''
-        if not self.so: return
+        if not self.so: return -1
         sockdata= str()
 
         # print '******Step : ' + str(step)
-        n_fail = 5 if step==0 else 2
+        n_fail = 10 if step==0 else 10
+
         n_fail_org = n_fail
         while True:
             try:
@@ -246,14 +247,15 @@ class Client(object):
                 sockdata,addr= self.so.recvfrom(data_size)
                 sockdata = sockdata.decode(u'utf-8')
             except socket.error as emsg:
-                print(u'.'),
+                print(u'.')
                 print("Waiting for server data on %d.............." % self.port)
 
                 print(u"Server count down : " + str(n_fail))
                 if n_fail < 0:
-                    # self.shutdown()
-                    return -1
-                    n_fail = n_fail_org
+                     #n_fail = 2   
+                     self.shutdown()
+                     return -1
+                     n_fail = n_fail_org
 
                 n_fail -= 1
 
@@ -265,13 +267,13 @@ class Client(object):
                         u"You were in %d place.") %
                         (self.port,self.S.d[u'racePos']))
                 self.shutdown()
-                return
+                return -1
             elif u'***restart***' in sockdata:
                 # What do I do here?
-                print(u"Server has restarted the race on %d." % self.port)
+                print( u"Server has restarted the race on %d." % self.port)
                 # I haven't actually caught the server doing this.
                 self.shutdown()
-                return
+                return -1
             elif not sockdata: # Empty?
                 continue       # Try again.
             else:
@@ -279,7 +281,7 @@ class Client(object):
                 if self.debug:
                     sys.stderr.write(u"\x1b[2J\x1b[H") # Clear for steady output.
                     print(self.S)
-                break # Can now return from this function.
+                return 1 # Can now return from this function.
 
     def respond_to_server(self):
         if not self.so: return
@@ -295,7 +297,7 @@ class Client(object):
 
     def shutdown(self):
         if not self.so: return
-        print(u"Race terminated or %d steps elapsed. Shutting down %d."
+        print (u"Race terminated or %d steps elapsed. Shutting down %d."
                % (self.maxSteps,self.port))
         self.so.close()
         self.so = None
